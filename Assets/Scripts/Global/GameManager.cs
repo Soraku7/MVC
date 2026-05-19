@@ -1,14 +1,12 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using Tools;
 
 namespace Global
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoScriptTon<GameManager>
     {
         public static Sound sound;
 
-        private void Awake()
+        public override void Awake()
         {
             sound = gameObject.AddComponent<Sound>();
             DontDestroyOnLoad(gameObject);
