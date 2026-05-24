@@ -63,14 +63,10 @@ public static class Mvc
 
     public static void SendEvent(string eventName, object data = null)
     {
-        foreach (var item in Controllers.Keys)
+        if (Controllers.TryGetValue(eventName, out var type))
         {
-            if (item == eventName)
-            {
-                Type type = Controllers[eventName];
-                Controller controller = (Controller)Activator.CreateInstance(type);
-                controller.Execute();
-            }
+            Controller controller = (Controller)Activator.CreateInstance(type);
+            controller.Execute(data);
         }
 
         foreach (var view in Views.Values)
