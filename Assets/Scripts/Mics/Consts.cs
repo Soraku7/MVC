@@ -7,4 +7,14 @@
         
         public const string V_Player = "V_Player";
     }
+    
+    public enum inputDirState
+    {
+        Idle,
+        Up,
+        Down,
+        Left,
+        Right,
+        Collision
+    }
 }

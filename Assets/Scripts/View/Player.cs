@@ -9,6 +9,12 @@ namespace Player
         private float _runSpeed = 10;
         private Vector2 touchPos;
         private float maxSqrDistance = 225;
+        private int nowRoadIndex;
+        private int targetRoadIndex;
+        private float baseXPos = 1.5f;
+        private float horizontalSpeed = 10f;
+        private inputDirState inputGesture;
+        private bool isTouch;
 
         private void Awake()
         {
@@ -18,6 +24,9 @@ namespace Player
         public void FixedUpdate()
         {
             _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
+
+            PlayerMove();
+            inputGesture = inputDirState.Idle;
         }
 
         private void Update()
@@ -25,35 +34,38 @@ namespace Player
             if (Input.GetMouseButtonDown(0))
             {
                 touchPos = Input.mousePosition;
+                isTouch = true;
             }
-            else if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0) && isTouch)
             {
                 Vector2 finPos = Input.mousePosition;
                 Vector2 dir = finPos - touchPos;
                 if (dir.sqrMagnitude > maxSqrDistance)
                 {
-                    if (dir.x > dir.y)
+                    if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
                     {
                         if (dir.x > 0)
                         {
-                            //右
+                            inputGesture = inputDirState.Right;
                         }
                         else if (dir.x < 0)
                         {
-                            //左
+                            inputGesture = inputDirState.Left;
                         }
                     }
-                    else if (dir.x < dir.y)
+                    else if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
                     {
                         if (dir.y > 0)
                         {
-                            //上
+                            inputGesture = inputDirState.Up;
                         }
                         else if (dir.y < 0)
                         {
-                            //下
+                            inputGesture = inputDirState.Down;
                         }
                     }
+
+                    isTouch = false;
                 }
             }
         }
@@ -63,6 +75,47 @@ namespace Player
         public override void HandleEvent(object data = null)
         {
             throw new System.NotImplementedException();
+        }
+
+        private void PlayerMove()
+        {
+            switch (inputGesture)
+            {
+                case inputDirState.Idle:
+                    break;
+
+                case inputDirState.Right:
+                    if (targetRoadIndex < 1)
+                    {
+                        targetRoadIndex++;
+                    }
+
+                    break;
+                case inputDirState.Left:
+                    if (targetRoadIndex > -1)
+                    {
+                        targetRoadIndex--;
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (nowRoadIndex != targetRoadIndex)
+            {
+                Vector3 pos = transform.position;
+                pos.x = Mathf.Lerp(pos.x, baseXPos * targetRoadIndex, Time.deltaTime * horizontalSpeed);
+                transform.position = pos;
+
+                if (Mathf.Abs(transform.position.x - baseXPos * targetRoadIndex) <= 0.1f)
+                {
+                    pos.x = baseXPos * targetRoadIndex;
+                    transform.position = pos;
+                    nowRoadIndex =  targetRoadIndex;
+                }
+            }
         }
     }
 }
