@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 4798241862311622}
   - component: {fileID: 111446911010415876}
   - component: {fileID: 2346700944560379878}
+  - component: {fileID: 5983171914326048169}
   - component: {fileID: 7775309833627854641}
   - component: {fileID: 263741575965634389}
   m_Layer: 0
@@ -313,6 +314,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Player
   attractEventList: []
+--- !u!114 &5983171914326048169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201059418589330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e07edff0da04e499ccb0c13a12ff90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DefaultNamespace.PlayerAnimation
+  anim: {fileID: 0}
 --- !u!114 &7775309833627854641
 MonoBehaviour:
   m_ObjectHideFlags: 0
