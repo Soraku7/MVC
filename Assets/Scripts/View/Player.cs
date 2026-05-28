@@ -11,6 +11,7 @@ public class Player : View
     private int targetRoadIndex;
     private float baseXPos = 1.5f;
     private float horizontalSpeed = 10f;
+    private float y_velocity;
     private inputDirState inputGesture;
     private bool isTouch;
 
@@ -31,7 +32,10 @@ public class Player : View
 
     public void FixedUpdate()
     {
-        _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
+        // _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
+
+        y_velocity -= 12f * Time.deltaTime;
+        _characterController.Move((Vector3.forward * _runSpeed + Vector3.up * y_velocity) * Time.deltaTime);
 
         PlayerMove();
         inputGesture = inputDirState.Idle;
@@ -108,6 +112,9 @@ public class Player : View
 
                 break;
 
+            case inputDirState.Up:
+                y_velocity = 6f;
+                break;
             default:
                 break;
         }
