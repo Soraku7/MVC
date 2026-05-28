@@ -1,120 +1,128 @@
 ﻿using Mics;
 using UnityEngine;
 
-namespace Player
+public class Player : View
 {
-    public class Player : View
+    private CharacterController _characterController;
+    private float _runSpeed = 10;
+    private Vector2 touchPos;
+    private float maxSqrDistance = 225;
+    private int nowRoadIndex;
+    private int targetRoadIndex;
+    private float baseXPos = 1.5f;
+    private float horizontalSpeed = 10f;
+    private inputDirState inputGesture;
+    private bool isTouch;
+
+    public delegate void ActionAnim(inputDirState inputDirState);
+
+    public ActionAnim actionAnim;
+
+    public event ActionAnim Order
     {
-        private CharacterController _characterController;
-        private float _runSpeed = 10;
-        private Vector2 touchPos;
-        private float maxSqrDistance = 225;
-        private int nowRoadIndex;
-        private int targetRoadIndex;
-        private float baseXPos = 1.5f;
-        private float horizontalSpeed = 10f;
-        private inputDirState inputGesture;
-        private bool isTouch;
+        add { actionAnim += value; }
+        remove { }
+    }
 
-        private void Awake()
+    private void Awake()
+    {
+        _characterController = GetComponent<CharacterController>();
+    }
+
+    public void FixedUpdate()
+    {
+        _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
+
+        PlayerMove();
+        inputGesture = inputDirState.Idle;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            _characterController = GetComponent<CharacterController>();
+            touchPos = Input.mousePosition;
+            isTouch = true;
         }
-
-        public void FixedUpdate()
+        else if (Input.GetMouseButton(0) && isTouch)
         {
-            _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
-
-            PlayerMove();
-            inputGesture = inputDirState.Idle;
-        }
-
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
+            Vector2 finPos = Input.mousePosition;
+            Vector2 dir = finPos - touchPos;
+            if (dir.sqrMagnitude > maxSqrDistance)
             {
-                touchPos = Input.mousePosition;
-                isTouch = true;
-            }
-            else if (Input.GetMouseButton(0) && isTouch)
-            {
-                Vector2 finPos = Input.mousePosition;
-                Vector2 dir = finPos - touchPos;
-                if (dir.sqrMagnitude > maxSqrDistance)
+                if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
                 {
-                    if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                    if (dir.x > 0)
                     {
-                        if (dir.x > 0)
-                        {
-                            inputGesture = inputDirState.Right;
-                        }
-                        else if (dir.x < 0)
-                        {
-                            inputGesture = inputDirState.Left;
-                        }
+                        inputGesture = inputDirState.Right;
                     }
-                    else if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
+                    else if (dir.x < 0)
                     {
-                        if (dir.y > 0)
-                        {
-                            inputGesture = inputDirState.Up;
-                        }
-                        else if (dir.y < 0)
-                        {
-                            inputGesture = inputDirState.Down;
-                        }
+                        inputGesture = inputDirState.Left;
                     }
-
-                    isTouch = false;
                 }
+                else if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
+                {
+                    if (dir.y > 0)
+                    {
+                        inputGesture = inputDirState.Up;
+                    }
+                    else if (dir.y < 0)
+                    {
+                        inputGesture = inputDirState.Down;
+                    }
+                }
+
+                isTouch = false;
+                actionAnim?.Invoke(inputGesture);
             }
         }
+    }
 
-        public override string Name => Consts.V_Player;
+    public override string Name => Consts.V_Player;
 
-        public override void HandleEvent(object data = null)
+    public override void HandleEvent(object data = null)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void PlayerMove()
+    {
+        switch (inputGesture)
         {
-            throw new System.NotImplementedException();
+            case inputDirState.Idle:
+                break;
+
+            case inputDirState.Right:
+                if (targetRoadIndex < 1)
+                {
+                    targetRoadIndex++;
+                }
+
+                break;
+            case inputDirState.Left:
+                if (targetRoadIndex > -1)
+                {
+                    targetRoadIndex--;
+                }
+
+                break;
+
+            default:
+                break;
         }
 
-        private void PlayerMove()
+        if (nowRoadIndex != targetRoadIndex)
         {
-            switch (inputGesture)
+            Vector3 pos = transform.position;
+            pos.x = Mathf.Lerp(pos.x, baseXPos * targetRoadIndex, Time.deltaTime * horizontalSpeed);
+            transform.position = pos;
+
+            if (Mathf.Abs(transform.position.x - baseXPos * targetRoadIndex) <= 0.1f)
             {
-                case inputDirState.Idle:
-                    break;
-
-                case inputDirState.Right:
-                    if (targetRoadIndex < 1)
-                    {
-                        targetRoadIndex++;
-                    }
-
-                    break;
-                case inputDirState.Left:
-                    if (targetRoadIndex > -1)
-                    {
-                        targetRoadIndex--;
-                    }
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            if (nowRoadIndex != targetRoadIndex)
-            {
-                Vector3 pos = transform.position;
-                pos.x = Mathf.Lerp(pos.x, baseXPos * targetRoadIndex, Time.deltaTime * horizontalSpeed);
+                pos.x = baseXPos * targetRoadIndex;
                 transform.position = pos;
-
-                if (Mathf.Abs(transform.position.x - baseXPos * targetRoadIndex) <= 0.1f)
-                {
-                    pos.x = baseXPos * targetRoadIndex;
-                    transform.position = pos;
-                    nowRoadIndex =  targetRoadIndex;
-                }
+                nowRoadIndex = targetRoadIndex;
             }
         }
     }
