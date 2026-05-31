@@ -15,6 +15,8 @@ public class Player : View
     private inputDirState inputGesture;
     private bool isTouch;
 
+    [SerializeField] private float recordSpeed = 10f;
+
     public delegate void ActionAnim(inputDirState inputDirState);
 
     public ActionAnim actionAnim;
@@ -32,9 +34,18 @@ public class Player : View
 
     public void FixedUpdate()
     {
-        // _characterController.Move(_runSpeed * Time.deltaTime * transform.forward);
+        if (y_velocity < -0.5)
+        {
+            if (_characterController.isGrounded)
+            {
+                _runSpeed = recordSpeed;
+            }
+        }
+        else
+        {
+            y_velocity -= 12f * Time.deltaTime;
+        }
 
-        y_velocity -= 12f * Time.deltaTime;
         _characterController.Move((Vector3.forward * _runSpeed + Vector3.up * y_velocity) * Time.deltaTime);
 
         PlayerMove();
@@ -113,7 +124,13 @@ public class Player : View
                 break;
 
             case inputDirState.Up:
-                y_velocity = 6f;
+                if (_characterController.isGrounded)
+                {
+                    y_velocity = 6f;
+                    recordSpeed = _runSpeed;
+                    _runSpeed /= 1.5f;
+                }
+
                 break;
             default:
                 break;
