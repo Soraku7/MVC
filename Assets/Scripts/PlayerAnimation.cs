@@ -1,4 +1,5 @@
-﻿using Mics;
+﻿using Global;
+using Mics;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -15,7 +16,7 @@ namespace DefaultNamespace
             _player = GetComponent<Player>();
 
             _player.Order += PlayerAnim;
-            
+
             PlayRun();
         }
 
@@ -48,19 +49,28 @@ namespace DefaultNamespace
             {
                 case inputDirState.Up:
                     PlayAnimation("jump");
+                    PlaySound("Se_UI_Jump");
                     break;
                 case inputDirState.Down:
                     PlayAnimation("roll");
+                    PlaySound("Se_UI_Roll");
                     break;
                 case inputDirState.Left:
                     PlayAnimation("left_jump");
+                    PlaySound("Se_UI_Speed");
                     break;
                 case inputDirState.Right:
                     PlayAnimation("right_jump");
+                    PlaySound("Se_UI_Speed");
                     break;
                 default:
                     break;
             }
+        }
+
+        public void PlaySound(string audioName)
+        {
+            GameManager.Instance.sound.PlayEffectAudio(audioName);
         }
     }
 }

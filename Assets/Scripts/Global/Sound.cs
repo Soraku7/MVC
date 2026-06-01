@@ -6,7 +6,7 @@ namespace Global
     {
         private AudioSource bgAudio;
         private AudioSource shotAudio;
-        private string resourcesPath = "";
+        private string resourcesPath = "Sound";
 
         private void Awake()
         {

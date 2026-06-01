@@ -1,9 +1,11 @@
 ﻿using Mics;
 using Tools;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Global
 {
+    [RequireComponent(typeof(Sound))]
     public class GameManager : MonoScriptTon<GameManager>
     {
         public Sound sound;
@@ -12,7 +14,7 @@ namespace Global
         {
             sound = gameObject.AddComponent<Sound>();
             DontDestroyOnLoad(gameObject);
-            LoadScene(0);
+            LoadScene(4);
         }
 
         public void LoadScene(int buildIndex)

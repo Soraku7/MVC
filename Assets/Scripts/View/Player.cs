@@ -43,7 +43,7 @@ public class Player : View
         }
         else
         {
-            y_velocity -= 12f * Time.deltaTime;
+            y_velocity -= 20f * Time.deltaTime;
         }
 
         _characterController.Move((Vector3.forward * _runSpeed + Vector3.up * y_velocity) * Time.deltaTime);
