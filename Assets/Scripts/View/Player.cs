@@ -15,11 +15,28 @@ public class Player : View
     private inputDirState inputGesture;
     private bool isTouch;
 
+    private int _coin;
+    private int _multiplyAdd = 1;
+
     [SerializeField] private float recordSpeed = 10f;
 
     public delegate void ActionAnim(inputDirState inputDirState);
 
     public ActionAnim actionAnim;
+
+    public override string Name => Consts.V_Player;
+
+    public int Coin
+    {
+        get => _coin;
+        set
+        {
+            if (value - _coin != 0)
+            {
+                _coin = value;
+            }
+        }
+    }
 
     public event ActionAnim Order
     {
@@ -94,8 +111,6 @@ public class Player : View
         }
     }
 
-    public override string Name => Consts.V_Player;
-
     public override void HandleEvent(object data = null)
     {
         throw new System.NotImplementedException();
@@ -149,5 +164,10 @@ public class Player : View
                 nowRoadIndex = targetRoadIndex;
             }
         }
+    }
+
+    private void PickCoin()
+    {
+        Coin += _multiplyAdd;
     }
 }
