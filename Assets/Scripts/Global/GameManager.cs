@@ -6,31 +6,32 @@ using UnityEngine.SceneManagement;
 namespace Global
 {
     [RequireComponent(typeof(Sound))]
+    [RequireComponent(typeof(ObjectPool))]
     public class GameManager : MonoScriptTon<GameManager>
     {
         public Sound sound;
+        private ObjectPool objectPool;
 
         public override void Awake()
         {
             sound = gameObject.AddComponent<Sound>();
+            objectPool = GetComponent<ObjectPool>();
+
+            Mvc.RegisterController(Consts.E_EnterScene, typeof(EnterSceneController));
+            SceneArgs args = new SceneArgs() { sceneIndex = 0 };
+            SendEvent(Consts.E_ExitScene, args);
+
             DontDestroyOnLoad(gameObject);
             LoadScene(4);
         }
 
         public void LoadScene(int buildIndex)
         {
-            if (buildIndex == 0)
-            {
-                Mvc.RegisterController(Consts.E_EnterScene, typeof(EnterSceneController));
-            }
-            else
-            {
-                SceneArgs args = new SceneArgs();
-                args.sceneIndex = SceneManager.GetActiveScene().buildIndex;
-                SendEvent(Consts.E_ExitScene, args);
+            SceneArgs args = new SceneArgs();
+            args.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SendEvent(Consts.E_ExitScene, args);
 
-                SceneManager.LoadScene(buildIndex, LoadSceneMode.Single);
-            }
+            SceneManager.LoadScene(buildIndex, LoadSceneMode.Single);
 
             SceneManager.sceneLoaded += (scene, mode) =>
             {
