@@ -1,7 +1,8 @@
-﻿using Mics;
+﻿using Global;
+using Mics;
 using UnityEngine;
 
-public class CoinItem : MonoBehaviour
+public class CoinItem : ResuableItem
 {
     private void LateUpdate()
     {
@@ -12,8 +13,19 @@ public class CoinItem : MonoBehaviour
     {
         if (other.CompareTag(Tags.Player))
         {
+            GameManager.Instance.sound.PlayEffectAudio(Consts.Se_UI_JinBi);
             other.SendMessage("PickCoin");
-            Destroy(gameObject);
+            GameManager.Instance.objectPool.Recycle(gameObject);
         }
+    }
+
+    public override void Spawn()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Recycle()
+    {
+        throw new System.NotImplementedException();
     }
 }

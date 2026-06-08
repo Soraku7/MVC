@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Global
@@ -36,13 +37,18 @@ namespace Global
             }
 
             go.SetActive(true);
+            go.SendMessage("Spawn", SendMessageOptions.DontRequireReceiver);
 
             return go;
         }
 
         public void Recycle(GameObject go)
         {
-            _objects.Find(x => x.GetHashCode() == go.GetHashCode()).gameObject.SetActive(false);
+            foreach (var item in _objects.Where(item => item == go))
+            {
+                item.SendMessage("Recycle", SendMessageOptions.DontRequireReceiver);
+                item.SetActive(false);
+            }
         }
 
         public bool ContainObject(GameObject go)

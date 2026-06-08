@@ -10,7 +10,7 @@ namespace Global
     public class GameManager : MonoScriptTon<GameManager>
     {
         public Sound sound;
-        private ObjectPool objectPool;
+        public ObjectPool objectPool;
 
         public override void Awake()
         {
