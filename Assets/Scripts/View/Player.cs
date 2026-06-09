@@ -1,4 +1,5 @@
-﻿using Mics;
+﻿using System.Collections;
+using Mics;
 using UnityEngine;
 
 public class Player : View
@@ -17,6 +18,7 @@ public class Player : View
 
     private int _coin;
     private int _multiplyAdd = 1;
+    private int multiplyTime = 2;
 
     [SerializeField] private float recordSpeed = 10f;
 
@@ -169,5 +171,17 @@ public class Player : View
     private void PickCoin()
     {
         Coin += _multiplyAdd;
+    }
+
+    private void OnMultiplyCoin()
+    {
+        _multiplyAdd = 2;
+        StartCoroutine(MultiplyCoinCor());
+    }
+
+    IEnumerator MultiplyCoinCor()
+    {
+        yield return new WaitForSeconds(multiplyTime);
+        _multiplyAdd = 1;
     }
 }

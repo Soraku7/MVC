@@ -7,5 +7,10 @@ namespace Global
         public abstract void Spawn();
 
         public abstract void Recycle();
+
+        protected virtual void LateUpdate()
+        {
+            transform.Rotate(Vector3.up * (120 * Time.deltaTime));
+        }
     }
 }
