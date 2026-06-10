@@ -26,6 +26,8 @@ public class Player : View
 
     public ActionAnim actionAnim;
 
+    private IEnumerator multiplyCor;
+
     public override string Name => Consts.V_Player;
 
     public int Coin
@@ -176,7 +178,13 @@ public class Player : View
     private void OnMultiplyCoin()
     {
         _multiplyAdd = 2;
-        StartCoroutine(MultiplyCoinCor());
+        if (multiplyCor != null)
+        {
+            StopCoroutine(multiplyCor);
+        }
+
+        multiplyCor = MultiplyCoinCor();
+        StartCoroutine(multiplyCor);
     }
 
     IEnumerator MultiplyCoinCor()

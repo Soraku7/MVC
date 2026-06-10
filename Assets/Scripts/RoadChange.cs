@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoadChange : MonoBehaviour
 {
     private string relativePath = "Pattern_";
-    private int roadNum = 4;
+    private int roadNum = 5;
 
     public GameObject nowPattern;
     public GameObject nextPattern;
