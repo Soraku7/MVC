@@ -32565,7 +32565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &438711950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91011,6 +91011,7 @@ GameObject:
   - component: {fileID: 1204826408}
   - component: {fileID: 1204826409}
   - component: {fileID: 1204826410}
+  - component: {fileID: 1204826411}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -91046,6 +91047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Global.GameManager
   sound: {fileID: 0}
+  objectPool: {fileID: 0}
 --- !u!114 &1204826410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91058,6 +91060,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab859ed71aef4c1da3fd5ceec0bdee1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Global.Sound
+--- !u!114 &1204826411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204826407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a357a9ed2f974c2dac3533acdf9e0c54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Global.ObjectPool
 --- !u!1 &1204986138
 GameObject:
   m_ObjectHideFlags: 0

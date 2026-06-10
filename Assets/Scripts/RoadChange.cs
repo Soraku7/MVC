@@ -1,17 +1,21 @@
-﻿using Mics;
+﻿using Global;
+using Mics;
 using UnityEngine;
 
 public class RoadChange : MonoBehaviour
 {
-    public GameObject[] pattern;
+    private string relativePath = "Pattern_";
+    private int roadNum = 4;
+
     public GameObject nowPattern;
     public GameObject nextPattern;
 
     private void Start()
     {
-        nowPattern = Instantiate(pattern[0]);
+        Debug.Log(relativePath + "1");
+        nowPattern = GameManager.Instance.objectPool.Spawn(relativePath + "1");
         nowPattern.transform.position = Vector3.zero;
-        nextPattern = Instantiate(pattern[1]);
+        nextPattern = GameManager.Instance.objectPool.Spawn(relativePath + "2");
         nextPattern.transform.position = Vector3.zero + Vector3.forward * 160;
     }
 
@@ -19,9 +23,10 @@ public class RoadChange : MonoBehaviour
     {
         if (other.CompareTag(Tags.Road))
         {
-            int index = Random.Range(0, pattern.Length);
-            GameObject patternInstance = GameObject.Instantiate(pattern[index]);
+            int index = Random.Range(1, roadNum);
+            GameObject patternInstance = GameManager.Instance.objectPool.Spawn(relativePath + index);
             patternInstance.transform.position = nextPattern.transform.position + Vector3.forward * 160;
+            GameManager.Instance.objectPool.Recycle(nowPattern);
             nowPattern = nextPattern;
             nextPattern = patternInstance;
         }
