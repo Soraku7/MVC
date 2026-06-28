@@ -1,11 +1,9 @@
-﻿using UnityEngine;
+﻿public abstract class Model
+{
+    public abstract string Name { get; }
 
-    public abstract class Model : MonoBehaviour
+    public virtual void SendEvent(string name, object data = null)
     {
-        public abstract string Name { get; }
-
-        public virtual void SendEvent(string name , object data = null)
-        {
-            Mvc.SendEvent(name, data);
-        }
+        Mvc.SendEvent(name, data);
     }
+}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Mics;
 using UnityEngine;
 
@@ -18,15 +19,31 @@ public class Player : View
 
     private int _coin;
     private int _multiplyAdd = 1;
-    private int multiplyTime = 2;
+    private float multiplyTime = 2f;
+    private float attractCoinTime = 2.5f;
 
     [SerializeField] private float recordSpeed = 10f;
+
+    private GameModel gm;
 
     public delegate void ActionAnim(inputDirState inputDirState);
 
     public ActionAnim actionAnim;
 
     private IEnumerator multiplyCor;
+    private IEnumerator megnetCor;
+
+    private bool isMegnetEf;
+
+    public bool IsMegnetEf
+    {
+        set
+        {
+            if (value == isMegnetEf) return;
+            isMegnetEf = value;
+            gm.IsMegnet = value;
+        }
+    }
 
     public override string Name => Consts.V_Player;
 
@@ -51,6 +68,11 @@ public class Player : View
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+    }
+
+    public void Start()
+    {
+        gm = Mvc.GetModel<GameModel>();
     }
 
     public void FixedUpdate()
@@ -191,5 +213,23 @@ public class Player : View
     {
         yield return new WaitForSeconds(multiplyTime);
         _multiplyAdd = 1;
+    }
+
+    private void OnMagnet()
+    {
+        if (megnetCor != null)
+        {
+            StopCoroutine(megnetCor);
+        }
+
+        megnetCor = MegnetCoroutine();
+        StartCoroutine(megnetCor);
+    }
+
+    IEnumerator MegnetCoroutine()
+    {
+        IsMegnetEf = true;
+        yield return new WaitForSeconds(attractCoinTime);
+        IsMegnetEf = false;
     }
 }

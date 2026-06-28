@@ -1,4 +1,5 @@
 ﻿using Mics;
+using UnityEngine;
 
 public class EnterSceneController : Controller
 {
@@ -9,8 +10,10 @@ public class EnterSceneController : Controller
             SceneArgs args = (SceneArgs)data;
             switch (args.sceneIndex)
             {
-                case 0:
+                case 4:
                     Mvc.RegisterController(Consts.E_ExitScene, typeof(ExitSceneController));
+                    RegisterModel(new GameModel());
+                    RegisterView(GameObject.FindWithTag(Tags.Player).GetComponent<Player>());
                     break;
 
                 default:
