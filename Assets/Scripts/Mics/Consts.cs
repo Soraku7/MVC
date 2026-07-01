@@ -11,6 +11,8 @@
         public const string V_Player = "V_Player";
 
         public const string GameModel = "GameModel";
+
+        public const string ItemBeforeTrigger = "ItemBeforeTrigger";
     }
 
     public enum inputDirState

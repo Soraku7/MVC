@@ -142,6 +142,14 @@ public class Player : View
         throw new System.NotImplementedException();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(Consts.ItemBeforeTrigger))
+        {
+            other.transform.parent.SendMessage("OnEngine");
+        }
+    }
+
     private void PlayerMove()
     {
         switch (inputGesture)
