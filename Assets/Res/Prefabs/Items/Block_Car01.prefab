@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angular: 0
+  isMove: 1
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
