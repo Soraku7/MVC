@@ -8,6 +8,7 @@ namespace Items
     public class CarItem : ResuableItem
     {
         private float speed = 10;
+        public bool isMove = false;
 
         public override void Spawn()
         {
@@ -29,7 +30,8 @@ namespace Items
 
         public void OnEngine()
         {
-            StartCoroutine(OnMove());
+            if (isMove)
+                StartCoroutine(OnMove());
         }
 
         IEnumerator OnMove()

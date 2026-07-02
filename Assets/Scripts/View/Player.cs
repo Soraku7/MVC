@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Global;
 using Mics;
 using UnityEngine;
 
@@ -215,6 +216,11 @@ public class Player : View
 
         multiplyCor = MultiplyCoinCor();
         StartCoroutine(multiplyCor);
+    }
+
+    private void OnHitObstacle()
+    {
+        GameManager.Instance.sound.PlayEffectAudio(Consts.Se_UI_Hit);
     }
 
     IEnumerator MultiplyCoinCor()
