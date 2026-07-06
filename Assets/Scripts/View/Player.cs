@@ -23,6 +23,11 @@ public class Player : View
     private float multiplyTime = 2f;
     private float attractCoinTime = 2.5f;
 
+    private float baseSpeed = 10;
+    private const float eachDistance = 100;
+    private float tempDistance;
+    private const int increamentSpeed = 2;
+
     [SerializeField] private float recordSpeed = 10f;
 
     private GameModel gm;
@@ -83,6 +88,13 @@ public class Player : View
             if (_characterController.isGrounded)
             {
                 _runSpeed = recordSpeed;
+                tempDistance += _runSpeed * Time.deltaTime;
+                if (tempDistance >= eachDistance)
+                {
+                    tempDistance = 0;
+                    _runSpeed += increamentSpeed;
+                    recordSpeed = _runSpeed;
+                }
             }
         }
         else
