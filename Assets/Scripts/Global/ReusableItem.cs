@@ -2,7 +2,7 @@
 
 namespace Global
 {
-    public abstract class ResuableItem : MonoBehaviour, IResuable
+    public abstract class ReusableItem : MonoBehaviour, IResuable
     {
         public int angular = 180;
 

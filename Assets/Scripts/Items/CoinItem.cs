@@ -3,7 +3,7 @@ using Global;
 using Mics;
 using UnityEngine;
 
-public class CoinItem : ResuableItem
+public class CoinItem : ReusableItem
 {
     private bool _isArea;
     private Player _player;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class Obstacle : ReusableItem
+    public class RoadBlock : ReusableItem
     {
         public override void Spawn()
         {
@@ -18,17 +18,16 @@ namespace Items
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(Tags.Player))
+            if (other.CompareTag("Player"))
             {
                 OnHitPlayer();
-                other.SendMessage("OnHitObstacle");
+                other.SendMessage("OnHitRoadBlock");
             }
         }
 
         private void OnHitPlayer()
         {
-            Destroy(gameObject);
-            // GameManager.Instance.objectPool.Recycle(gameObject);
+            GameManager.Instance.sound.PlayEffectAudio(Consts.Se_UI_Hit);
         }
     }
 }

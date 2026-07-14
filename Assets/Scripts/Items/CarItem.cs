@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class CarItem : ResuableItem
+    public class CarItem : ReusableItem
     {
         private float speed = 10;
         public bool isMove = false;

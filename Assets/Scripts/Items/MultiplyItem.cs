@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class MultiplyItem : ResuableItem
+    public class MultiplyItem : ReusableItem
     {
         public override void Spawn()
         {

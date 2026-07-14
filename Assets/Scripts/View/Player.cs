@@ -12,7 +12,7 @@ public class Player : View
     private float maxSqrDistance = 225;
     private int nowRoadIndex;
     private int targetRoadIndex;
-    private float baseXPos = 1.5f;
+    private float baseXPos = 2f;
     private float horizontalSpeed = 10f;
     private float y_velocity;
     private inputDirState inputGesture;
@@ -27,6 +27,8 @@ public class Player : View
     private const float eachDistance = 100;
     private float tempDistance;
     private const int increamentSpeed = 2;
+    private bool _isReduce;
+    private bool _isSlider;
 
     [SerializeField] private float recordSpeed = 10f;
 
@@ -87,7 +89,11 @@ public class Player : View
         {
             if (_characterController.isGrounded)
             {
-                _runSpeed = recordSpeed;
+                if (_isReduce == false)
+                {
+                    _runSpeed = recordSpeed;
+                }
+
                 tempDistance += _runSpeed * Time.deltaTime;
                 if (tempDistance >= eachDistance)
                 {
@@ -161,6 +167,36 @@ public class Player : View
         {
             other.transform.parent.SendMessage("OnEngine");
         }
+
+        if (other.CompareTag(Tags.HighFence))
+        {
+            StartCoroutine(ReduceSpeed());
+        }
+        else if (other.CompareTag(Tags.SmallFence))
+        {
+            if (_isSlider)
+            {
+                _isSlider = false;
+            }
+            else
+            {
+                StartCoroutine(ReduceSpeed());
+            }
+        }
+    }
+
+    private IEnumerator ReduceSpeed()
+    {
+        if (_isReduce == false)
+        {
+            recordSpeed = _runSpeed;
+            _runSpeed /= 1.2f;
+            _isReduce = true;
+        }
+
+        yield return new WaitForSeconds(3f);
+        _runSpeed = recordSpeed;
+        _isReduce = false;
     }
 
     private void PlayerMove()
@@ -193,6 +229,10 @@ public class Player : View
                     _runSpeed /= 1.5f;
                 }
 
+                break;
+
+            case inputDirState.Down:
+                _isSlider = true;
                 break;
             default:
                 break;
@@ -233,6 +273,11 @@ public class Player : View
     private void OnHitObstacle()
     {
         GameManager.Instance.sound.PlayEffectAudio(Consts.Se_UI_Hit);
+        Time.timeScale = 0;
+    }
+
+    private void OnHitRoadBlock()
+    {
     }
 
     IEnumerator MultiplyCoinCor()
