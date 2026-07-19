@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class MagnetItem : ReusableItem
+    public class MagnetItem : Item
     {
         public override void Spawn()
         {

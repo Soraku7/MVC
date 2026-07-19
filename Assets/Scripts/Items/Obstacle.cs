@@ -4,19 +4,9 @@ using UnityEngine;
 
 namespace Items
 {
-    public class Obstacle : ReusableItem
+    public abstract class Obstacle : ReusableItem
     {
-        public override void Spawn()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Recycle()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(Tags.Player))
             {
@@ -25,10 +15,6 @@ namespace Items
             }
         }
 
-        private void OnHitPlayer()
-        {
-            Destroy(gameObject);
-            // GameManager.Instance.objectPool.Recycle(gameObject);
-        }
+        protected abstract void OnHitPlayer();
     }
 }

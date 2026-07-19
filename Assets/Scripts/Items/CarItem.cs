@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Items
 {
-    public class CarItem : ReusableItem
+    public class CarItem : Obstacle
     {
         private float speed = 10;
         public bool isMove = false;
@@ -18,14 +18,6 @@ namespace Items
         public override void Recycle()
         {
             throw new System.NotImplementedException();
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(Tags.Player))
-            {
-                Time.timeScale = 0;
-            }
         }
 
         public void OnEngine()
@@ -41,6 +33,11 @@ namespace Items
                 transform.Translate(speed * Time.deltaTime * Vector3.forward);
                 yield return 0;
             }
+        }
+
+        protected override void OnHitPlayer()
+        {
+            Destroy(gameObject);
         }
     }
 }

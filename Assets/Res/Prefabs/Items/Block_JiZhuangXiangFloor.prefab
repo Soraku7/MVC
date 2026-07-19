@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
-  - component: {fileID: 11400002}
+  - component: {fileID: 4117490010845588124}
   - component: {fileID: 6400000}
   - component: {fileID: 6500004}
   m_Layer: 0
@@ -171,7 +171,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &11400002
+--- !u!114 &4117490010845588124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,9 +180,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72982c7da341454f975fd7b320e17b39, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a964d70f9114fd39463e35adcac3e06, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Items.FloorCarBlock
   angular: 0
 --- !u!64 &6400000
 MeshCollider:

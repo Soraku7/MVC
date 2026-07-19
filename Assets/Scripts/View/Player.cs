@@ -168,19 +168,19 @@ public class Player : View
             other.transform.parent.SendMessage("OnEngine");
         }
 
-        if (other.CompareTag(Tags.HighFence))
+        if (other.CompareTag(Tags.SmallFence))
         {
             StartCoroutine(ReduceSpeed());
         }
-        else if (other.CompareTag(Tags.SmallFence))
+        else if (other.CompareTag(Tags.HighFence))
         {
-            if (_isSlider)
+            if (!_isSlider)
             {
-                _isSlider = false;
+                StartCoroutine(ReduceSpeed());
             }
             else
             {
-                StartCoroutine(ReduceSpeed());
+                _isSlider = false;
             }
         }
     }

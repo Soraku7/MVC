@@ -1,12 +1,15 @@
 ﻿using System;
 using Global;
+using Items;
 using Mics;
 using UnityEngine;
 
-public class CoinItem : ReusableItem
+public class CoinItem : Item
 {
     private bool _isArea;
     private Player _player;
+
+    float _moveSpeed = 30f;
 
     private GameModel gm;
 
@@ -23,7 +26,9 @@ public class CoinItem : ReusableItem
         if (gm.IsMegnet && _isArea && _player != null)
         {
             Debug.Log("BB");
-            transform.Translate((_player.transform.position - transform.position).normalized * (Time.deltaTime * 10f),
+
+            transform.Translate(
+                (_player.transform.position - transform.position).normalized * (Time.deltaTime * _moveSpeed),
                 Space.World);
         }
     }
