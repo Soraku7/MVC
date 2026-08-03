@@ -183,6 +183,17 @@ public class Player : View
                 _isSlider = false;
             }
         }
+
+        if (other.CompareTag(Tags.GoalBefore))
+        {
+            if (other is BoxCollider)
+            {
+                other.SendMessage("PlayerCome" , transform.position);
+            }
+            else if (other is CapsuleCollider)
+            {
+            }
+        }
     }
 
     private IEnumerator ReduceSpeed()

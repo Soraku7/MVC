@@ -7,5 +7,6 @@
         public const string MagnetTrigger = "MagnetTrigger";
         public const string SmallFence = "Small_Fence";
         public const string HighFence = "High_Fence";
+        public const string GoalBefore =  "GoalBefore";
     }
 }
